@@ -49,24 +49,4 @@ class User extends Model
     delete pub.conn
     return pub
 
-  getTimeSheets: (options, cb, filters) ->
-    fetcher = new TimeSheetFetcher()
-    options.user_id = @id
-    fetcher.fetch(@conn, options, cb, filters)
-
-  getProfileSettings: (options, cb, filters) ->
-    options.user_id = @username
-    fetcher = new ProfileSettingFetcher()
-    fetcher.fetch(@conn, options, cb, filters)
-
-  getProfileSettingsById: (req, options, cb, filters) ->
-    options.id = req.param "id"
-    @getProfileSettings(options, cb, filters)
-
-  getActivityTypes: (options, cb, filters) ->
-    options.controlling_area = @controlling_area
-    options.cost_center = @cost_center
-    fetcher = new ActivityTypeFetcher()
-    fetcher.fetch(@conn, options, cb, filters)
-
 module.exports = User

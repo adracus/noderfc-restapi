@@ -52,14 +52,13 @@ formatRoutes = (routes) ->
 
 requestParams = (req) ->
   result = {}
-  _.extend(result, req.body)
   _.extend(result, req.params)
-  _.extend(result, req.query)
+  _.extend(result, req.body) if req.method == "POST"
+  _.extend(result, req.query) if req.method == "GET"
   result
 
 doFetch = (req, res, fetcher, filters, idFetch) ->
-  user = getAuthorizedUser(req)
-  fetcher.fetch(user.conn, requestParams(req),
+  fetcher.fetch(req.conn, requestParams(req),
     _.partial(onContent, res, _, _, idFetch), filters)
 
 formatMethods = (methods) ->
@@ -79,7 +78,9 @@ sendAuthFailedMessage = (res) ->
 
 doUserAuthorization = (req, credentials, cb) ->
   return cb(credentials.getCorrectionString()) if not credentials.areValid()
-  return cb(null, getAuthorizedUser(req)) if getAuthorizedUser(req)
+  if getAuthorizedUser(req)
+    req.conn = getAuthorizedUser(req).conn
+    return cb(null, getAuthorizedUser(req))
   credentials.getConnection (err, conn) ->
     if err or not conn
       console.error err
@@ -88,9 +89,10 @@ doUserAuthorization = (req, credentials, cb) ->
       if err or not user
         console.error err
         return cb "No user"
-      user.conn = conn
       user.username = credentials.username
       current_users[credentials.username] = user
+      user.conn = conn
+      req.conn = conn
       cb(null, user)
     )
 
@@ -99,8 +101,16 @@ module.exports =
     doUserAuthorization(req, new Credentials(auth(req)), (err, user) ->
       if err or not user
         console.error err
-        sendAuthFailedMessage res
-      next()
+        return sendAuthFailedMessage res
+      if not req.params.user or req.params.user == "me"
+        req.user = user
+        return next()
+      new UserFetcher().fetch(req.conn, {id: req.param("user")}, (err, user) ->
+        if not user
+          return res.json(400, "User not found")
+        req.user = user
+        return next()
+      )
     )
 
   index: (express, req, res) ->
@@ -113,28 +123,24 @@ module.exports =
 
   logout: (req, res) ->
     user = getAuthorizedUser(req)
-    user.conn.close()
+    req.conn.close()
     delete current_users[user.username]
     return res.json(200, "You successfully logged out")
 
   userInfo: (req, res) ->
-    res.json current_users[getAuthorizedUser(req).username].repr()
-
-  userTimesheets: (req, res) ->
-    getAuthorizedUser(req).getTimeSheets(requestParams(req),
-      _.partial(onContent, res))
+    res.json req.user.repr()
 
   userSettings: (req, res) ->
-    getAuthorizedUser(req).getProfileSettings(requestParams(req),
+    req.user.getProfileSettings(req, requestParams(req),
       _.partial(onContent, res))
 
   userSettingsById: (req, res) ->
-    getAuthorizedUser(req)
+    req.user
       .getProfileSettingsById(req, requestParams(req),
         _.partial(onContent, res))
 
   userActivityTypes: (req, res) ->
-    getAuthorizedUser(req).getActivityTypes(requestParams(req),
+    req.user.getActivityTypes(req, requestParams(req),
       _.partial(onContent, res))
 
   getActivityTypes: (req, res) ->
@@ -143,11 +149,23 @@ module.exports =
   getActivityTypesById: (req, res) ->
     doFetch(req, res, new ActivityTypeFetcher(), {}, true)
 
-  getTimeSheetsByUserId: (req, res) ->
-    doFetch(req, res, new TimeSheetFetcher())
-
   getTimeSheets: (req, res) ->
-    doFetch(req, res, new TimeSheetFetcher())
+    fetcher = new TimeSheetFetcher()
+    params = requestParams(req)
+    user = req.user
+    params.user_id = user.id if not params.user_id
+    fetcher.fetch(req.conn, params,
+      _.partial(onContent, res, _, _, false), {})
+
+  getTimeSheetsById: (req, res) ->
+    fetcher = new TimeSheetFetcher()
+    params = requestParams(req)
+    params.ids = [{id: params.id}]
+    delete params.id
+    user = req.user
+    params.user_id = user.id if not params.user_id
+    fetcher.fetch(req.conn, params,
+      _.partial(onContent, res, _, _, true), {})
 
   getAbsAttTypes: (req, res) ->
     doFetch(req, res, new AbsAttTypeFetcher())
@@ -205,3 +223,13 @@ module.exports =
 
   postTimesheetData: (req, res) ->
     doFetch(req, res, new TimeEntryCall())
+
+  deleteTimeSheetById: (req, res) ->
+    call = new TimeEntryCall()
+    params = requestParams(req)
+    params.delete_timesheets = [{id: params.id}]
+    delete params.id
+    user = req.user
+    params.user_id = user.id if not params.user_id
+    call.fetch(req.conn, params,
+      _.partial(onContent, res, _, _, true), {})

@@ -1,35 +1,7 @@
 Model = require "./model"
 
-class EmployeeTimeSheetAggregated extends Model
-  constructor: ->
-    super({
-      employee_id:
-        abapName: "EMPLOYEE"
-        type: "Numc_8"
-      employee_last_name:
-        abapName: "LAST_NAME"
-        type: "Char_25"
-      employee_first_name:
-        abapName: "FIRSTNAME"
-        type: "Char_25"
-      total_planned:
-        abapName: "TOTAL_PLANNED"
-        type: "Numc_4"
-      total_posted:
-        abapName: "TOTAL_POSTED"
-        type: "Numc_4"
-      total_approved:
-        abapName: "TOTAL_APPROVED"
-        type: "Numc_4"
-      total_rejected:
-        abapName: "TOTAL_REJECTED"
-        type: "Numc_4"
-      unit:
-        abapName: "UNIT"
-        type: "Char_3"
-    })
 
-class EmployeeTimeSheetDaily extends Model
+class TimeSheet extends Model
   constructor: ->
     super({
       counter:
@@ -83,17 +55,6 @@ class EmployeeTimeSheetDaily extends Model
       reason:
         abapName: "REASON"
         type: "Char_4"
-    })
-
-class TimeSheet extends Model
-  constructor: ->
-    super({
-      aggregated:
-        abapName: "ET_TS_DATA"
-        type: EmployeeTimeSheetAggregated
-      daily:
-        abapName: "ET_DAILY_TS"
-        type: EmployeeTimeSheetDaily
     })
 
 module.exports = TimeSheet

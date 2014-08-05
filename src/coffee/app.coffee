@@ -18,6 +18,7 @@ app.use (err, req, res, next) ->
     potato: "http://upload.wikimedia.org/wikipedia/commons/thumb/4/4c/Potato_heart_mutation.jpg/686px-Potato_heart_mutation.jpg"
   })
 
+
 # Index and management routes
 app.get("/", _.partial(routes.index, app))
 app.get("/doc", (req, res) ->
@@ -26,22 +27,15 @@ app.get("/doc", (req, res) ->
 # Authorization routes
 app.get("/logout", routes.auth, routes.logout)
 
-
 # User specific routes
-app.get("/user/me", routes.auth, routes.userInfo)
-app.get("/user/me/settings", routes.auth, routes.userSettings)
-app.get("/user/me/settings/:id", routes.auth, routes.userSettingsById)
-app.get("/user/me/timesheet", routes.auth, routes.userTimesheets)
-app.get("/user/me/activity_types", routes.auth,
-  routes.userActivityTypes)
-
-# Specified User routes
-app.get("/user/:id/timesheet", routes.auth,
-  routes.getTimeSheetsByUserId)
-#app.get("/user/:id/image", routes.auth, routes.getUserImage)
+app.get("/user/:user", routes.auth, routes.userInfo)
+app.get("/user/:user/timesheets", routes.auth, routes.getTimeSheets)
+app.get("/user/:user/timesheets/:id", routes.auth, routes.getTimeSheetsById)
 
 # Query routes
 app.get("/timesheets", routes.auth, routes.getTimeSheets)
+app.get("/timesheets/:id", routes.auth, routes.getTimeSheetsById)
+`app.delete("/timesheets/:id", routes.auth, routes.deleteTimeSheetById)`
 app.post("/timesheets/post", routes.auth, routes.postTimesheetData) #ugly
 
 app.get("/abs_att_types", routes.auth, routes.getAbsAttTypes)
