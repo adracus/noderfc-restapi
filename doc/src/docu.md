@@ -193,56 +193,56 @@ Returns the timesheet for the current user.
 
 + Response 200
 
-    {
-        "daily": [
-            {
-                "counter": "000000002197",
-                "status": "60",
-                "status_text": "Cancelled",
-                "user_id": 100190,
-                "workdate": "2011-11-20T23:00:00.000Z",
-                "hours_posted": 6,
-                "hours_planned": 8,
-                "unit": "H",
-                "receiver_order": "800058",
-                "network": "",
-                "activity": "",
-                "wbs_element": "",
-                "abs_att_type": "0800",
-                "activity_type": "1410",
-                "delete_flag": false,
-                "reason": ""
-            },
-            {
-                "counter": "000000002200",
-                "status": "60",
-                "status_text": "Cancelled",
-                "user_id": 100190,
-                "workdate": "2011-11-20T23:00:00.000Z",
-                "hours_posted": 4,
-                "hours_planned": 8,
-                "unit": "H",
-                "receiver_order": "",
-                "network": "904240",
-                "activity": "0050",
-                "wbs_element": "",
-                "abs_att_type": "0800",
-                "activity_type": "1410",
-                "delete_flag": false,
-                "reason": ""
-            },
-            ...
-        ],
-        "aggregated": [
-            {
-                "employee_id": 100190,
-                "employee_last_name": "Sanson",
-                "employee_first_name": "John",
-                "total_planned": 24,
-                "total_posted": 49,
-                "total_approved": 0,
-                "total_rejected": 0,
-                "unit": "H"
-            }
-        ]
-    }
+        {
+            "daily": [
+                {
+                    "counter": "000000002197",
+                    "status": "60",
+                    "status_text": "Cancelled",
+                    "user_id": 100190,
+                    "workdate": "2011-11-20T23:00:00.000Z",
+                    "hours_posted": 6,
+                    "hours_planned": 8,
+                    "unit": "H",
+                    "receiver_order": "800058",
+                    "network": "",
+                    "activity": "",
+                    "wbs_element": "",
+                    "abs_att_type": "0800",
+                    "activity_type": "1410",
+                    "delete_flag": false,
+                    "reason": ""
+                },
+                {
+                    "counter": "000000002200",
+                    "status": "60",
+                    "status_text": "Cancelled",
+                    "user_id": 100190,
+                    "workdate": "2011-11-20T23:00:00.000Z",
+                    "hours_posted": 4,
+                    "hours_planned": 8,
+                    "unit": "H",
+                    "receiver_order": "",
+                    "network": "904240",
+                    "activity": "0050",
+                    "wbs_element": "",
+                    "abs_att_type": "0800",
+                    "activity_type": "1410",
+                    "delete_flag": false,
+                    "reason": ""
+                },
+                ...
+            ],
+            "aggregated": [
+                {
+                    "employee_id": 100190,
+                    "employee_last_name": "Sanson",
+                    "employee_first_name": "John",
+                    "total_planned": 24,
+                    "total_posted": 49,
+                    "total_approved": 0,
+                    "total_rejected": 0,
+                    "unit": "H"
+                }
+            ]
+        }
