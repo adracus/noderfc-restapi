@@ -1,7 +1,8 @@
 REST API using SAP node-rfc
 ===========================
 
-Example how to create REST API for time recording, out SAP BAPIs or remote function modules (RFCs), using node-rfc, node,
+Example how to create REST API for time recording, out SAP BAPIs or remote function modules (RFCs), using 
+(node-rfc)[https://github.com/SAP/node-rfc], node,
 express and gulp as a build tool. 
 
 ## Prerequisites

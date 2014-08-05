@@ -60,3 +60,4 @@ node_modules
 src/js/
 doc/gen/
 res/
+*.trc
