@@ -80,9 +80,15 @@ options =
   key: fs.readFileSync(__dirname + '/../../res/key.pem')
   cert: fs.readFileSync(__dirname + '/../../res/cert.pem')
 
+if process.env.PORT
+  https_port = process.env.PORT
+  http_port = parseInt(process.env.PORT) + 1
+else
+  https_port = 443
+  http_port = 80
 
 server = https.createServer(options, app)
-server.listen 443
+server.listen https_port
 
 redirectServer = express()
 
@@ -90,4 +96,7 @@ redirectServer.all("/*", (req, res) ->
   return res.redirect "https://#{req.host}#{req.url}"
 )
 
-redirectServer.listen 80
+redirectServer.listen http_port
+
+console.log "Serving https server at #{https_port}"
+console.log "Serving http server at #{http_port}"
