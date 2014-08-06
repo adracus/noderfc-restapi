@@ -14,6 +14,7 @@
     "basic-auth": "^1.0.0",
     "bcryptjs": "1.0.x",
     "body-parser": "1.4.x",
+    "cors": "^2.4.1",
     "express": "4.4.x",
     "gulp": "^3.8.6",
     "gulp-aglio": "0.0.5",

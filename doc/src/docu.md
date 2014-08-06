@@ -635,7 +635,6 @@ Invokes RFC **Z_PBR_COST_CENTER_GETLIST**.
 ### Get a specific cost center [GET]
 Invokes RFC **Z_PBR_COST_CENTER_GETLIST**.
 
-
 + Request (application/json)
 
     + Headers
@@ -646,9 +645,269 @@ Invokes RFC **Z_PBR_COST_CENTER_GETLIST**.
     + id (string) ... Id of the cost center
 
 + Response 200
+
         {
             "id": "LO710",
             "controlling_area_id": "1000",
             "company_code": "1000",
             "name": "(TO BE DELETED)"
+        }
+
+# Group Rejection Reason
+
+## Rejection Reason index [/rejection_reasons]
+
+### Get a list of rejection reasons [GET]
+Invokes RFC **Z_PBR_REJECT_REASON_GETLIST**
+
++ Request (application/json)
+
+    + Headers
+
+         Authorization: Basic SFJQQl9FTVBMMDE6d2VsY29tZQ==
+
++ Response 200
+        
+        [
+            {
+                "id": "0001",
+                "description": "Unauthorized Overtime"
+            },
+            {
+                "id": "0002",
+                "description": "Incorrect Assignment"
+            },
+            {
+                "id": "0003",
+                "description": "Error"
+            },
+            {
+                "id": "IECP",
+                "description": "IECPP: Incorrect Account Assignment"
+            },
+            {
+                "id": "Y001",
+                "description": "Wrong Activity type"
+            },
+            ...
+        ]
+
+## Rejection Reason by id [/rejection_reason/:id]
+
+### Get a specific rejection reason [GET]
+Invokes RFC **Z_PBR_REJECT_REASON_GETLIST**
+
++ Request (application/json)
+
+    + Headers
+
+         Authorization: Basic SFJQQl9FTVBMMDE6d2VsY29tZQ==
+
++ Parameters
+    + id (string) ... id of the rejection reason
+
++ Response 200
+    
+        {
+            "id": "0001",
+            "description": "Unauthorized Overtime"
+        }
+
+# Group WBS Element
+
+## WBS Element index [/wbs_elements]
+
+### Get a list of WBS Elements [GET]
+Invokes RFC **Z_PBR_WBS_ELEMENT_GETLIST**.
+
++ Request (application/json)
+
+    + Headers
+
+         Authorization: Basic SFJQQl9FTVBMMDE6d2VsY29tZQ==
+
++ Parameters
+    + description (string, optional) ... Description, **IV_WBS_TEXT**
+    + id (string, optional) ... Id of the element, **IV_WBS**
+    + project (string, optional) ... Project, **IV_PROJECT**
+
++ Response 200
+    
+        [
+            {
+                "description": "",
+                "id": "1",
+                "project": "1"
+            },
+            {
+                "description": "",
+                "id": "110-00",
+                "project": "110"
+            },
+            {
+                "description": "",
+                "id": "110-01",
+                "project": "110"
+            },
+            {
+                "description": "",
+                "id": "110-02",
+                "project": "110"
+            },
+            ...
+        ]
+
+## WBS Element by id [/wbs_elements/:id]
+Invokes RFC **Z_PBR_WBS_ELEMENT_GETLIST**.
+
+### Get specific wbs element [GET]
+
++ Request (application/json)
+
+    + Headers
+
+         Authorization: Basic SFJQQl9FTVBMMDE6d2VsY29tZQ==
+
++ Parameters
+    + id (string) ... Id of the desired WBS Elemnt
+
++ Response 200
+
+        {
+            "description": "",
+            "id": "1",
+            "project": "1"
+        }
+
+# Group Controlling Area
+
+## Controlling Area index [/controlling_areas]
+
+### Get list of controlling areas [GET]
+Invokes **Z_PBR_CO_AREA_GETLIST**.
+
++ Request (application/json)
+
+    + Headers
+
+         Authorization: Basic SFJQQl9FTVBMMDE6d2VsY29tZQ==
+
++ Parameters
+    + id (string, optional) ... Id of the controlling area, **IV_CO_AREA**
+    + name (string, optional) ... Name of the controlling area, **IV_CO_AREA_TEXT**
+    + max_records (number, optional) ... Number of max records, **IV_MAXRECORDS**
+
++ Response 200
+
+        [
+            {
+                "id": "0001",
+                "name": "Kostenrechnungskreis 0001"
+            },
+            {
+                "id": "1000",
+                "name": "CO Europe"
+            },
+            {
+                "id": "2000",
+                "name": "CO N. America"
+            },
+            {
+                "id": "2200",
+                "name": "CO France"
+            },
+            ...
+        ]
+
+## Controlling area by id [/controlling_areas/:id]
+
+### Get a specific controlling area [GET]
+Invokes **Z_PBR_CO_AREA_GETLIST**.
+
++ Request (application/json)
+
+    + Headers
+
+         Authorization: Basic SFJQQl9FTVBMMDE6d2VsY29tZQ==
+
++ Parameters
+    + id (string) ... Id of the controlling area, **IV_CO_AREA**
+
++ Response 200
+
+        {
+            "id": "0001",
+            "name": "Kostenrechnungskreis 0001"
+        }
+
+# Group Receiver order
+
+## Receiver order index [/receiver_orders]
+
+### Get a list of receiver orders [GET]
+Invokes RFC **Z_PBR_RECEIVER_ORDER_GETLIST**
+
++ Request (application/json)
+
+    + Headers
+
+         Authorization: Basic SFJQQl9FTVBMMDE6d2VsY29tZQ==
+
++ Parameters
+    + id (optional, string) ... id of the order, **IV_ORDER**
+    + description (optional, string) ... description of the order, **IV_ORDER_TEXT**
+    + company_code (optional, string) ... company code of the order, **IV_COMPANY_CODE**
+    + cost_center (optional, string) ... cost center of the order, **IV_COST_CENTER**
+    + controlling_area (optional, string) ... controlling area of the order, **IV_CO_AREA**
+    + max_records (optional, number) ... max records, **IV_MAXRECORDS**
+
++ Result 200
+
+        [
+            {
+                "id": "800057",
+                "description": "Expand Corp Offices: Architectural Plan",
+                "company_code": "3000",
+                "controlling_area": "2000",
+                "cost_center": ""
+            },
+            {
+                "id": "800058",
+                "description": "Expandir Escritórios Corp: ConferênciaRc",
+                "company_code": "3000",
+                "controlling_area": "2000",
+                "cost_center": ""
+            },
+            {
+                "id": "800059",
+                "description": "Expandir Escritórios Corp: Mailroom Atua",
+                "company_code": "3000",
+                "controlling_area": "2000",
+                "cost_center": ""
+            },
+            ...
+        ]
+
+## Receiver order by id [/receiver_orders/:id]
+
+### Get specific receiver order [GET]
+Invokes RFC **Z_PBR_RECEIVER_ORDER_GETLIST**
+
++ Request (application/json)
+
+    + Headers
+
+         Authorization: Basic SFJQQl9FTVBMMDE6d2VsY29tZQ==
+
++ Parameters
+    + id (string) ... id of the order, **IV_ORDER**
+
++ Response 200
+
+        {
+            "id": "800057",
+            "description": "Expand Corp Offices: Architectural Plan",
+            "company_code": "3000",
+            "controlling_area": "2000",
+            "cost_center": ""
         }
