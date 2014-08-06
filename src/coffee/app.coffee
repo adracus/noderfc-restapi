@@ -38,6 +38,9 @@ app.get("/timesheets/:id", routes.auth, routes.getTimeSheetsById)
 `app.delete("/timesheets/:id", routes.auth, routes.deleteTimeSheetById)`
 app.post("/timesheets/post", routes.auth, routes.postTimesheetData) #ugly
 
+app.get("/profile_settings", routes.auth, routes.getProfileSettings)
+app.get("/profile_settings/:id", routes.auth, routes.getProfileSettingsById)
+
 app.get("/abs_att_types", routes.auth, routes.getAbsAttTypes)
 app.get("/abs_att_types/:id", routes.auth, routes.getAbsAttTypesById)
 
@@ -83,7 +86,7 @@ server.listen 443
 
 redirectServer = express()
 
-redirectServer.get("/*", (req, res) ->
+redirectServer.all("/*", (req, res) ->
   return res.redirect "https://#{req.host}#{req.url}"
 )
 

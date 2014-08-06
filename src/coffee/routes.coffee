@@ -130,19 +130,6 @@ module.exports =
   userInfo: (req, res) ->
     res.json req.user.repr()
 
-  userSettings: (req, res) ->
-    req.user.getProfileSettings(req, requestParams(req),
-      _.partial(onContent, res))
-
-  userSettingsById: (req, res) ->
-    req.user
-      .getProfileSettingsById(req, requestParams(req),
-        _.partial(onContent, res))
-
-  userActivityTypes: (req, res) ->
-    req.user.getActivityTypes(req, requestParams(req),
-      _.partial(onContent, res))
-
   getActivityTypes: (req, res) ->
     doFetch(req, res, new ActivityTypeFetcher())
 
@@ -166,6 +153,12 @@ module.exports =
     params.user_id = user.id if not params.user_id
     fetcher.fetch(req.conn, params,
       _.partial(onContent, res, _, _, true), {})
+
+  getProfileSettings: (req, res) ->
+    doFetch(req, res, new ProfileSettingFetcher())
+
+  getProfileSettingsById: (req, res) ->
+    doFetch(req, res, new ProfileSettingFetcher(), {}, true)
 
   getAbsAttTypes: (req, res) ->
     doFetch(req, res, new AbsAttTypeFetcher())
