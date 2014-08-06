@@ -11,7 +11,9 @@ After that, run `npm install`.
 ## Building
 The source code of this api is written in coffeescript and the documentation is written in the blueprint format, so for
 the code and documentation generation gulp is quite handy. To generate documentation, use `gulp doc` and to generate
-js code from the coffeescript code use `gulp coffee`. Also, you'll need an sapnwrfc.json file in which the connection information for your SAP systems resides. The system which shall be loaded has to have the name `I64`.
+js code from the coffeescript code use `gulp coffee`. Also, you'll need an sapnwrfc.json file in the folder
+`res` in which the connection information for your SAP systems resides. The system which shall be
+loaded has to have the name `I64`.
 
 Example of such a file:
 
@@ -28,6 +30,14 @@ Example of such a file:
   }
 }
 ```
+
+Last but not least, you need a certificate and a key for the https server to work. Those files should also reside
+in `res`, the key named `key.pem` and the certificate named `cert.pem`. Via openssl, it is quite easy to generate
+a self signed certificate and a key. For this, type
+
+    openssl req -newkey rsa:2048 -new -nodes -x509 -days 3650 -keyout key.pem -out cert.pem
+    
+into your console which should lead you through a setup, which will output the desired files.
 
 ## Running
 For development usage (with live api auto reloading and a
