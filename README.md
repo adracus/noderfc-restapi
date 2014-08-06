@@ -1,10 +1,14 @@
-ActivityRecording
-=================
+REST API using SAP node-rfc
+===========================
 
-Activity recording app written in express
+Example how to create REST API for time recording, out SAP BAPIs or remote function modules (RFCs), using node-rfc, node, express and gulp as a build tool. 
 
-This app is written in coffeescript. In order to run it, you'll have to compile the
-coffeescript into javascript and launch it.
+Install 
+
+
+
+
+
 
 ## Setup
 You'll need to have node, npm and gulp (globally, via npm) installed. After that, run
