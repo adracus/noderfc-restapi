@@ -15,6 +15,7 @@ RejectionReasonFetcher      = require './model/model_fetchers/rejection_reason_f
 AbsAttTypeFetcher           = require './model/model_fetchers/abs_att_type_fetcher'
 CostCenterFetcher           = require './model/model_fetchers/cost_center_fetcher'
 ProcessingStatusFetcher     = require './model/model_fetchers/processing_status_fetcher'
+WorklistFetcher             = require './model/model_fetchers/worklist_fetcher'
 Credentials                 = require './credentials'
 ApproveRejectCall           = require "./rfc_calls/approve_reject_call"
 TimeEntryCall               = require "./rfc_calls/timesheet_post_call"
@@ -207,6 +208,9 @@ module.exports =
 
   getWBSElementsById: (req, res) ->
     doFetch(req, res, new WBSElementFetcher(), {}, true)
+
+  getWorklists: (req, res) ->
+    doFetch(req, res, new WorklistFetcher())
 
   ###getUserImage: (req, res) ->
     doFetch(req, res, new ImageCall())###

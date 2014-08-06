@@ -12,7 +12,10 @@ class Model
 
   decode: (set) ->
     _.extend(this, @_attributes.decode(set))
+    @onDecoded(set)
     return this
+
+  onDecoded: (set) ->
 
   encode: () -> @_attributes.encode(this)
 

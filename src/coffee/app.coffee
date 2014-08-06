@@ -76,6 +76,8 @@ app.get("/processing_statuses", routes.auth,
 app.get("/processing_statuses/:id", routes.auth,
   routes.getProcessingStatusesById)
 
+app.get("/worklists", routes.auth, routes.getWorklists)
+
 # Data entry routes
 app.post("/timesheets/approve_reject", routes.auth,
   routes.postApproveReject)
