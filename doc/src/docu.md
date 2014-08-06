@@ -501,6 +501,8 @@ Returns a list of activity types. Invokes **Z_PBR_ACTIVITY_TYPES_GETLIST**.
         ]
 
 ## Activity Types by id [/activity_types/:id]
+
+### Retrieve specific activity type [GET]
 Fetches the type with the specified id. Invokes **Z_PBR_ACTIVITY_TYPES_GETLIST**.
 
 + Request (application/json)
@@ -554,3 +556,23 @@ Fetches the type with the specified id. Invokes **Z_PBR_ACTIVITY_TYPES_GETLIST**
             },
             ...
         ]
+
+## Company Codes by id [/company_codes/:id]
+
+### Retrieve specific company code [GET]
+
++ Request (application/json)
+
+    + Headers
+
+         Authorization: Basic SFJQQl9FTVBMMDE6d2VsY29tZQ==
+
++ Parameters
+    + id (string) ... Id of the company code, ABAP Name: **IV_COMP_CODE**
+
++ Response 200
+
+        {
+            "id": "0001",
+            "name": "SAP A.G."
+        }
