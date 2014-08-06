@@ -5,6 +5,7 @@ _           = require "underscore"
 express     = require "express"
 bodyParser  = require "body-parser"
 path        = require "path"
+cors        = require "cors"
 routes      = require "./routes"
 Credentials = require "./credentials"
 
@@ -18,6 +19,9 @@ app.use (err, req, res, next) ->
     potato: "http://upload.wikimedia.org/wikipedia/commons/thumb/4/4c/Potato_heart_mutation.jpg/686px-Potato_heart_mutation.jpg"
   })
 
+app.use(cors())
+
+app.enable("trust proxy")
 
 # Index and management routes
 app.get("/", _.partial(routes.index, app))

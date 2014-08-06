@@ -514,11 +514,19 @@ Fetches the type with the specified id. Invokes **Z_PBR_ACTIVITY_TYPES_GETLIST**
 + Parameters
     + id (string) ... id of the activity type
 
++ Response 200
+    
+        {
+            "id": "1409",
+            "name": "Modification hours"
+        }
+
 # Group Company Codes
 
 ## Company Codes index [/company_codes]
 
 ### Retrieve list of company codes [GET]
+Invokes RFC **Z_PBR_COMP_CODE_GETLIST**.
 
 + Request (application/json)
 
@@ -560,6 +568,7 @@ Fetches the type with the specified id. Invokes **Z_PBR_ACTIVITY_TYPES_GETLIST**
 ## Company Codes by id [/company_codes/:id]
 
 ### Retrieve specific company code [GET]
+Invokes RFC **Z_PBR_COMP_CODE_GETLIST**.
 
 + Request (application/json)
 
@@ -575,4 +584,71 @@ Fetches the type with the specified id. Invokes **Z_PBR_ACTIVITY_TYPES_GETLIST**
         {
             "id": "0001",
             "name": "SAP A.G."
+        }
+
+# Group Cost Centers
+
+## Cost Centers index [/cost_centers]
+
+### Get a list of cost centers [GET]
+Invokes RFC **Z_PBR_COST_CENTER_GETLIST**.
+
++ Request (application/json)
+
+    + Headers
+
+         Authorization: Basic SFJQQl9FTVBMMDE6d2VsY29tZQ==
+
++ Parameters
+    + controlling_area_id (string, optional) ... controlling area id, **IV_CO_AREA**
+    + id (string, optional) ... id of the cost center, **IV_COSTCENTER**
+    + company_code (string, optional) ... company code, **IV_COMPANY_CODE**
+    + name (string, optional) ... name of the cost center, **IV_COSTCENTER_TEXT**
+    + max_records (number, optional) ... no of maximum records to be fetched, **IV_MAXRECORDS**
+
++ Response 200
+
+        [
+            {
+                "id": "LO710",
+                "controlling_area_id": "1000",
+                "company_code": "1000",
+                "name": "(TO BE DELETED)"
+            },
+            {
+                "id": "N9960",
+                "controlling_area_id": "2000",
+                "company_code": "3000",
+                "name": "ACCESS"
+            },
+            {
+                "id": "T-114000",
+                "controlling_area_id": "1000",
+                "company_code": "0005",
+                "name": "ACCOUNTING"
+            },
+            ...
+        ]
+
+## Cost Center by id [/cost_centers/:id]
+
+### Get a specific cost center [GET]
+Invokes RFC **Z_PBR_COST_CENTER_GETLIST**.
+
+
++ Request (application/json)
+
+    + Headers
+
+         Authorization: Basic SFJQQl9FTVBMMDE6d2VsY29tZQ==
+
++ Parameters
+    + id (string) ... Id of the cost center
+
++ Response 200
+        {
+            "id": "LO710",
+            "controlling_area_id": "1000",
+            "company_code": "1000",
+            "name": "(TO BE DELETED)"
         }
