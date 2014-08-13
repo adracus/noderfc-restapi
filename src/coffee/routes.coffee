@@ -41,8 +41,11 @@ onContent = (res, err, data, idFetch) ->
 
 getAuthorizedUser = (req) ->
   data = auth(req)
-  if data && data.name
-    return current_users[data.name.toUpperCase()]
+  if data && data.name && data.pass
+    temp = current_users[data.name.toUpperCase()]
+    if not temp or temp.password != data.pass
+      return undefined
+    return temp
   return undefined
 
 formatRoutes = (routes) ->
@@ -91,6 +94,7 @@ doUserAuthorization = (req, credentials, cb) ->
         console.error err
         return cb "No user"
       user.username = credentials.username
+      user.password = credentials.password
       current_users[credentials.username] = user
       user.conn = conn
       req.conn = conn

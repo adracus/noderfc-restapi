@@ -42,11 +42,12 @@ class User extends Model
         type: "Char_2"
     })
 
-  repr: () -> _.omit(this, 'attributes', '_attributes', 'conn')
+  repr: () -> _.omit(this, 'attributes', '_attributes', 'conn', 'password')
 
   toPublic: () ->
     pub = _.clone(this)
     delete pub.conn
+    delete pub.password
     return pub
 
 module.exports = User
